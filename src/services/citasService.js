@@ -52,6 +52,13 @@ const verificarCorrespondencia = async () => {
 
 
             try {
+                const chatExists = await client.getChatById(numberId).catch(() => null);
+
+                if (!chatExists) {
+                    console.log(`❌ El número ${correspondencia.telefono} no tiene un chat activo. Saltando...`);
+                    continue; // evitar el error de serialize
+                }
+            
                 console.log(`📩 Enviando mensaje a ${correspondencia.telefono}: ${mensaje}`);
 
                 // Enviar mensaje por WhatsApp usuario dinamico
@@ -83,4 +90,3 @@ const verificarCorrespondencia = async () => {
 
 module.exports = { verificarCorrespondencia };
 
-//==================================================================================================
